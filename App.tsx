@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-
 import {
   StyleSheet,
   View,
@@ -20,11 +19,12 @@ export default function App() {
     const modelSrc =
       Platform.OS === 'android'
         ? 'https://github.com/riderodd/react-native-ar/blob/main/example/src/dice.glb?raw=true'
-        : 'https://github.com/riderodd/react-native-ar/blob/main/example/src/dice.usdz?raw=true';
+        : 'https://github.com/DmitriyPaliy/previewARViewer/blob/main/assets/speedboat.usdz?raw=true';
     const modelPath = `${RNFS.DocumentDirectoryPath}/model.${
       Platform.OS === 'android' ? 'glb' : 'usdz'
     }`;
     const exists = await RNFS.exists(modelPath);
+
     if (!exists) {
       await RNFS.downloadFile({
         fromUrl: modelSrc,
@@ -68,6 +68,7 @@ export default function App() {
         <ArViewerView
           model={localModelPath}
           style={styles.arView}
+          lightEstimation
           disableInstantPlacement
           manageDepth
           allowRotate
@@ -77,6 +78,7 @@ export default function App() {
           onEnded={() => console.log('ended')}
           onModelPlaced={() => console.log('model displayed')}
           onModelRemoved={() => console.log('model not visible anymore')}
+          planeOrientation="both"
           ref={ref}
         />
       )}
